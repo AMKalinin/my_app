@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "my-app"
+version = "0.1.0"
+description = "my app"
+authors = ["AMKalinin <am1kalinin@gmail.com>"]
+readme = "README.md"
+packages = [{include = "my_app"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.101.0"
+uvicorn = {extras = ["standart"], version = "^0.23.2"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
