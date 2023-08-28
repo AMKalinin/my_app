@@ -12,6 +12,10 @@ router = APIRouter()
 def get_all_projects(stroka: str) -> Any:
     return {'stroka':stroka}
 
+@router.post('/')
+def get_test() -> Any:
+    return {'stroka':'ok'}
+
 @router.post('/c', response_model=ProjectBase)
 def create_project(*, db: Session = Depends(deps.get_db), project_in: ProjectBase) -> Any:
     project = crud.project.create(db, project_in)
