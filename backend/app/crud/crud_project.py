@@ -4,6 +4,10 @@ from app.models.project import Project
 from app.schemas.project import ProjectBase
 
 class CRUDProject():
+
+    def get_all(self, db:Session)->list[Project]:
+        return db.query(Project).all()
+
     def create(self, db:Session, project_in:ProjectBase)->Project:
         db_project = Project(name = project_in.name,
                              create_date = project_in.create_date,
