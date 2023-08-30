@@ -4,8 +4,8 @@ import datetime
 
 class ProjectBase(BaseModel):
     name: str
-    create_date: datetime.date
-    last_update: datetime.date
+    create_date: datetime.date = datetime.date.today()
+    last_update: datetime.date = datetime.date.today()
     creator: str
     status: str
-    description: str | None = None
+    description: str | None

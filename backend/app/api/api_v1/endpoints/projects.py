@@ -1,10 +1,11 @@
-from typing import Any
-from fastapi import APIRouter, Depends
+from typing import Any, Annotated
+from fastapi import APIRouter, Depends, UploadFile, Form
 
 from app.schemas.project import ProjectBase
 from sqlalchemy.orm import Session
 from app.api import deps
 from app import crud
+from app.utils.project import ProjectWorker
 
 router = APIRouter()
 
@@ -13,8 +14,19 @@ def get_all_projects(db: Session = Depends(deps.get_db)) -> Any:
     return crud.project.get_all(db)
 
 @router.post('/create', response_model=ProjectBase)
-def create_project(*, db: Session = Depends(deps.get_db), project_in: ProjectBase) -> Any:
-    project = crud.project.create(db, project_in)
+def create_project1(*, db: Session = Depends(deps.get_db),
+                    files:list[UploadFile], 
+                    project_name: Annotated[str, Form()],
+                    creator: Annotated[str, Form()],
+                    status: Annotated[str, Form()],
+                    description: Annotated[str, Form()]) -> Any:
+    
+    project = crud.project.create(db, ProjectBase(name=project_name,
+                                                  creator=creator,
+                                                  status=status,
+                                                  description=description))
+    prj_worker = ProjectWorker(project_name)
+    prj_worker.create_project(files)
     return project
 
 @router.post('/create-based', response_model=ProjectBase)
