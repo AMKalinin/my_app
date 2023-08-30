@@ -17,6 +17,10 @@ def create_project(*, db: Session = Depends(deps.get_db), project_in: ProjectBas
     project = crud.project.create(db, project_in)
     return project
 
+@router.post('/create-based', response_model=ProjectBase)
+def create_project(*, db: Session = Depends(deps.get_db), project_in: ProjectBase) -> Any:
+    ...
+
 @router.get('/{project_name}', response_model=ProjectBase)
 def get_project(*, db: Session = Depends(deps.get_db), project_name:str) -> Any:
     project = crud.project.get_by_name(db, project_name)
@@ -25,15 +29,3 @@ def get_project(*, db: Session = Depends(deps.get_db), project_name:str) -> Any:
 @router.delete('/{project_name}')
 def delete_project(*, db: Session = Depends(deps.get_db), project_name:str) -> Any:
     crud.project.delete_by_name(db, project_name)
-
-@router.get('/{project_name}/tasks')
-def get_all_tasks_in_project():
-    ...
-
-@router.get('/{project_name}/tasks/{task_id}')
-def get_task():
-    ...
-
-@router.put('/{project_name}/tasks/{task_id}')
-def update_task_status():
-    ...

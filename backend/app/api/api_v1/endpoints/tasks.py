@@ -9,7 +9,14 @@ from app import crud
 
 router = APIRouter()
 
-@router.post('/c', response_model=TaskBase)
-def create_task(*, db: Session = Depends(deps.get_db), task_in: TaskBase) -> Any:
-    task = crud.task.create(db, task_in)
-    return task
+@router.get('')
+def get_all_tasks_in_project(project_name:str):
+    ...
+
+@router.get('/{task_id}')
+def get_task(project_name:str, task_id:int):
+    ...
+
+@router.put('/{task_id}')
+def update_task_status(project_name:str, task_id:int):
+    ...
