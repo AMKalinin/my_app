@@ -10,6 +10,11 @@ class CRUDProject():
     def get_all(self, db:Session)->list[Project]:
         return db.query(Project).all()
 
+    def create(self, db:Session, project_in:ProjectBase, files:list[UploadFile]) -> Project:
+        db_project = self.create_db(db, project_in)
+        self.create_file(db, project_in, files)
+        return db_project
+    
     def create_db(self,db:Session, project_in:ProjectBase)->Project:
         db_project = Project(name = project_in.name,
                              create_date = project_in.create_date,
@@ -25,11 +30,6 @@ class CRUDProject():
     def create_file(self,db:Session, project_in:ProjectBase, files:list[UploadFile]) -> None:
             prj_worker = ProjectWorker(project_in.name)
             prj_worker.create_project(db, files)
-
-    def create(self, db:Session, project_in:ProjectBase, files:list[UploadFile]) -> Project:
-        db_project = self.create_db(db, project_in)
-        self.create_file(db, project_in, files)
-        return db_project
     
     def get_by_name(self, db:Session, name:str) -> Project:
         return db.query(Project).filter(Project.name == name).first()

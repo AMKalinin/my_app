@@ -36,14 +36,12 @@ class ProjectWorker():
     def add_task(self,db:Session, hdf:h5py.File, image:UploadFile, index:int):
         img = Image.open(image.file)
         task_folder = hdf.create_group(str(index))
-        w = img.size[0]
-        h = img.size[1]
-        count_layers = self.get_count_layers(w,h)
+        count_layers = self.get_count_layers(img.size[0], img.size[1])
         task = TaskBase(id=index,
                         project_name=self.project_name,
                         file_name=image.filename,
-                        width=w,
-                        height=h,
+                        width=img.size[0],
+                        height=img.size[1],
                         layers_count=count_layers,
                         status='OK')
         self.add_task_db(db, task_in=task)
