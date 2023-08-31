@@ -5,7 +5,6 @@ from app.schemas.project import ProjectBase
 from sqlalchemy.orm import Session
 from app.api import deps
 from app import crud
-from app.utils.project import ProjectWorker
 
 router = APIRouter()
 
@@ -24,9 +23,7 @@ def create_project1(*, db: Session = Depends(deps.get_db),
     project = crud.project.create(db, ProjectBase(name=project_name,
                                                   creator=creator,
                                                   status=status,
-                                                  description=description))
-    prj_worker = ProjectWorker(project_name)
-    prj_worker.create_project(files)
+                                                  description=description), files)
     return project
 
 @router.post('/create-based', response_model=ProjectBase)

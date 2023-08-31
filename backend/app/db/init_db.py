@@ -25,7 +25,6 @@ def init_db():
             task = Task(id=1,
                         project_name = project.name,
                         file_name = 'file name',
-                        file_path = 'file path',
                         width = 100,
                         height = 150, 
                         layers_count = 4,
