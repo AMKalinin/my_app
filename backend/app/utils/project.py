@@ -94,15 +94,18 @@ class ProjectWorker():
             end_p[1] = height
         return start_p, end_p
     
+    def image_data2byte(self, data:np.ndarray) -> bytes:
+        image = Image.fromarray(data)
+        buf = io.BytesIO()
+        image.save(buf, format='png')
+        byte_encode = buf.getvalue()
+        return byte_encode
 
     def get_task_icon(self, task_id:int) -> bytes:
         with h5py.File(self.project_path, 'r') as hdf:
             task = hdf.get(str(task_id))
             data = np.array(task.get('img_icon'))
-            image = Image.fromarray(data)
-            buf = io.BytesIO()
-            image.save(buf, format='png')
-            byte_encode = buf.getvalue()
+            byte_encode = self.image_data2byte(data)
         return byte_encode
 
     def get_task_tail(self, task_id:int, layer:int, x:int, y:int) -> bytes:
@@ -110,8 +113,5 @@ class ProjectWorker():
             task = hdf.get(str(task_id))
             layer = task.get('layer_' + str(layer))
             data = np.array(layer.get(f'{str(x)}:{str(y)}'))
-            image = Image.fromarray(data)
-            buf = io.BytesIO()
-            image.save(buf, format='png')
-            byte_encode = buf.getvalue()
+            byte_encode = self.image_data2byte(data)
         return byte_encode
