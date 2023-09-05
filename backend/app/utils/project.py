@@ -1,3 +1,4 @@
+import io
 import math
 import numpy as np
 import h5py
@@ -45,6 +46,10 @@ class ProjectWorker():
                         layers_count=count_layers,
                         status='OK')
         self.add_task_db(db, task_in=task)
+
+        img_icon = img.resize((100,100))
+        task_folder.create_dataset('img_icon', data=np.asarray(img_icon, dtype='uint8'))    
+        
         for i in range(count_layers):
             self.create_layer(task_folder, i, img)
 
@@ -88,3 +93,25 @@ class ProjectWorker():
         if ((sampl_h+1)*self.tile['height']) > height:
             end_p[1] = height
         return start_p, end_p
+    
+
+    def get_task_icon(self, task_id:int) -> bytes:
+        with h5py.File(self.project_path, 'r') as hdf:
+            task = hdf.get(str(task_id))
+            data = np.array(task.get('img_icon'))
+            image = Image.fromarray(data)
+            buf = io.BytesIO()
+            image.save(buf, format='png')
+            byte_encode = buf.getvalue()
+        return byte_encode
+
+    def get_task_tail(self, task_id:int, layer:int, x:int, y:int) -> bytes:
+        with h5py.File(self.project_path, 'r') as hdf:
+            task = hdf.get(str(task_id))
+            layer = task.get('layer_' + str(layer))
+            data = np.array(layer.get(f'{str(x)}:{str(y)}'))
+            image = Image.fromarray(data)
+            buf = io.BytesIO()
+            image.save(buf, format='png')
+            byte_encode = buf.getvalue()
+        return byte_encode
