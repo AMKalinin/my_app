@@ -1,18 +1,16 @@
 <template>
     <div>
         <ul class="navBar" @click="updateColor">
-            <li v-if="currentPath === projectsPath || currentPath === '/'" class="navItem" >
+            <li class="navItem" >
                 <router-link to="/projects" :id = "currentPath != projectsPath ||'active'">Projects</router-link>
             </li>
-            <div v-else-if="currentPath != projectsPath">
-                <li class="navItem">
-                    <router-link to="/tasks" :id = "currentPath != tasksPath || 'active'">Tasks</router-link>
-                </li>
-                
-                <li class="navItem">
-                    <router-link to="/view" :id = "currentPath != viewPath || 'active'" >View</router-link>
-                </li>
-            </div>
+            <li class="navItem">
+                <router-link to="/tasks" :id = "currentPath != tasksPath || 'active'">Tasks</router-link>
+            </li>
+            
+            <li class="navItem">
+                <router-link to="/view" :id = "currentPath != viewPath || 'active'" >View</router-link>
+            </li>
         </ul>
     </div>
 </template>
