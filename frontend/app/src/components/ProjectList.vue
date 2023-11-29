@@ -26,6 +26,34 @@ export default{
                 task:{done:1,
                     all:4},
                 lastUpdate: '21.09.2023'
+                },
+                {
+                id:1,
+                name:'Prj 2',
+                task:{done:1,
+                    all:4},
+                lastUpdate: '21.09.2023'
+                },
+                {
+                id:1,
+                name:'Prj 2',
+                task:{done:1,
+                    all:4},
+                lastUpdate: '21.09.2023'
+                },
+                {
+                id:1,
+                name:'Prj 2',
+                task:{done:1,
+                    all:4},
+                lastUpdate: '21.09.2023'
+                },
+                {
+                id:1,
+                name:'Prj 2',
+                task:{done:1,
+                    all:4},
+                lastUpdate: '21.09.2023'
                 }
             ]
         }
