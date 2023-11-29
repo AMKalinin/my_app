@@ -4,10 +4,10 @@
         <div>
             ID: {{task.id}}<br>
             <div v-if="task.status == 0">
-                <button class="btnEdit">Edit</button><br>
+                <button class="btnEdit" @click="$router.push('/edit')">Edit</button><br>
             </div>
             <div v-else>
-                <button class="btnView">View</button><br>
+                <button class="btnView" @click="$router.push('/inspect')">Inspect</button><br>
             </div>
         </div>
     </fieldset>
@@ -83,4 +83,10 @@ export default{
 .selected {
     opacity: 0.6;
   }
+
+button a{
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
 </style>

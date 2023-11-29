@@ -1,6 +1,8 @@
 import ProjectsTab from "@/views/ProjectsTab";
 import TasksTab from "@/views/TasksTab";
 import ViewTab from "@/views/ViewTab";
+import InspectTab from "@/views/InspectTab";
+import EditTab from "@/views/EditTab";
 
 import {createRouter, createWebHistory} from "vue-router"
 
@@ -20,6 +22,14 @@ const routes = [
     {
         path: '/view',
         component: ViewTab
+    },
+    {
+        path: '/edit',
+        component: EditTab
+    },
+    {
+        path: '/inspect',
+        component: InspectTab
     }
 ]
 
